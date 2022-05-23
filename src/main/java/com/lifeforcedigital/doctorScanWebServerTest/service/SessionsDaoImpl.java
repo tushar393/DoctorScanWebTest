@@ -1,6 +1,7 @@
 package com.lifeforcedigital.doctorScanWebServerTest.service;
 
 import com.lifeforcedigital.doctorScanWebServerTest.dao.SessionsDao;
+import com.lifeforcedigital.doctorScanWebServerTest.model.BookingSlots;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Sessions;
 import com.lifeforcedigital.doctorScanWebServerTest.rowMapper.SessionsRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -26,35 +27,40 @@ public class SessionsDaoImpl implements SessionsDao {
 
     @Override
     public List<Sessions> insertSessions(List<Sessions> sessionsList) {
-        for (Sessions sessions : sessionsList) {
 
-            jdbcTemplate.update(INSERT_Sessions, new Object[]{
-                    sessions.getUserId(),
-                    sessions.getSessionId(),
-                    sessions.getPractitionerId(),
-                    sessions.getDayOfWk(),
-                    sessions.getApptBookId(),
-                    sessions.getOneStart(),
-                    sessions.getOneEnd(),
-                    sessions.getOneType(),
-                    sessions.getTwoStart(),
-                    sessions.getTwoEnd(),
-                    sessions.getTwoType(),
-                    sessions.getThreeStart(),
-                    sessions.getThreeEnd(),
-                    sessions.getThreeType(),
-                    sessions.getFourStart(),
-                    sessions.getFourEnd(),
-                    sessions.getFourType(),
-                    sessions.getFiveStart(),
-                    sessions.getFiveEnd(),
-                    sessions.getFiveType(),
-                    sessions.getSixStart(),
-                    sessions.getSixEnd(),
-                    sessions.getSixType(),
-                    new Date(),
-                    new Date()
-            });
+        List <Sessions> fetchSessions= this.fetchSessions();
+
+        for (Sessions sessions : sessionsList) {
+            if (fetchSessions.stream().filter(slots -> slots.getSessionId() == sessions.getSessionId()).findAny().orElse(null) == null) {
+
+                jdbcTemplate.update(INSERT_Sessions, new Object[]{
+                        sessions.getUserId(),
+                        sessions.getSessionId(),
+                        sessions.getPractitionerId(),
+                        sessions.getDayOfWk(),
+                        sessions.getApptBookId(),
+                        sessions.getOneStart(),
+                        sessions.getOneEnd(),
+                        sessions.getOneType(),
+                        sessions.getTwoStart(),
+                        sessions.getTwoEnd(),
+                        sessions.getTwoType(),
+                        sessions.getThreeStart(),
+                        sessions.getThreeEnd(),
+                        sessions.getThreeType(),
+                        sessions.getFourStart(),
+                        sessions.getFourEnd(),
+                        sessions.getFourType(),
+                        sessions.getFiveStart(),
+                        sessions.getFiveEnd(),
+                        sessions.getFiveType(),
+                        sessions.getSixStart(),
+                        sessions.getSixEnd(),
+                        sessions.getSixType(),
+                        new Date(),
+                        new Date()
+                });
+            }
         }
         return sessionsList;
     }

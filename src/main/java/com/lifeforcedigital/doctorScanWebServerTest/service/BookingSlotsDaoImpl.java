@@ -28,18 +28,21 @@ public class BookingSlotsDaoImpl implements BookingSlotsDao {
     @Override
     public List<BookingSlots> insertBookingSlots(List<BookingSlots> bookingSlotsList) {
 
+        List <BookingSlots> slotsList= this.fetchBookingSlots();
         for (BookingSlots bookingSlots : bookingSlotsList) {
+            if (slotsList.stream().filter(slots -> slots.getApptBookID() == bookingSlots.getApptBookID()).findAny().orElse(null) == null) {
 
-            jdbcTemplate.update(INSERT_Booking_Slots, new Object[]{
-                    bookingSlots.getUserId(),
-                    bookingSlots.getApptBookID(),
-                    bookingSlots.getTimeSlotSize(),
-                    bookingSlots.getStartTime(),
-                    bookingSlots.getEndTime(),
-                    bookingSlots.getDescription(),
-                    new Date(),
-                    new Date()
-            });
+                jdbcTemplate.update(INSERT_Booking_Slots, new Object[]{
+                        bookingSlots.getUserId(),
+                        bookingSlots.getApptBookID(),
+                        bookingSlots.getTimeSlotSize(),
+                        bookingSlots.getStartTime(),
+                        bookingSlots.getEndTime(),
+                        bookingSlots.getDescription(),
+                        new Date(),
+                        new Date()
+                });
+            }
         }
         return bookingSlotsList;
     }
