@@ -1,9 +1,7 @@
 package com.lifeforcedigital.doctorScanWebServerTest.service;
 
 import com.lifeforcedigital.doctorScanWebServerTest.dao.TempSessionsDao;
-import com.lifeforcedigital.doctorScanWebServerTest.model.Sessions;
 import com.lifeforcedigital.doctorScanWebServerTest.model.TempSessions;
-import com.lifeforcedigital.doctorScanWebServerTest.rowMapper.SessionsRowMapper;
 import com.lifeforcedigital.doctorScanWebServerTest.rowMapper.TempSessionsRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

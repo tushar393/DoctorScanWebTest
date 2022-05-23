@@ -1,6 +1,5 @@
 package com.lifeforcedigital.doctorScanWebServerTest.dao;
 
-import com.lifeforcedigital.doctorScanWebServerTest.model.Sessions;
 import com.lifeforcedigital.doctorScanWebServerTest.model.TempSessions;
 
 import java.util.List;

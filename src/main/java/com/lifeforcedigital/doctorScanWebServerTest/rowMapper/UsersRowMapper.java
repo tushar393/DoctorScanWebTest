@@ -1,0 +1,93 @@
+package com.lifeforcedigital.doctorScanWebServerTest.rowMapper;
+
+import com.lifeforcedigital.doctorScanWebServerTest.model.Users;
+import org.springframework.jdbc.core.RowMapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class UsersRowMapper implements RowMapper<Users> {
+    @Override
+    public Users mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Users genPrac = new Users();
+        genPrac.setId(rs.getInt("id"));
+        genPrac.setParentId(rs.getInt("parentId"));
+        genPrac.setTitle(rs.getString("title"));
+        genPrac.setFirstName(rs.getString("firstName"));
+        genPrac.setMiddleName(rs.getString("middleName"));
+        genPrac.setSurname(rs.getString("surname"));
+        genPrac.setName(rs.getString("name"));
+        genPrac.setPatientId(rs.getInt("patientId"));
+        genPrac.setEmail(rs.getString("email"));
+        genPrac.setPhone(rs.getString("phone"));
+        genPrac.setBusiness_logo(rs.getString("business_logo"));
+        genPrac.setBusiness_name(rs.getString("business_name"));
+        genPrac.setWaitingmusic(rs.getInt("waitingmusic"));
+        genPrac.setDob(rs.getString("dob"));
+        genPrac.setGender(rs.getString("gender"));
+        genPrac.setCountry(rs.getString("country"));
+        genPrac.setRegion(rs.getString("region"));
+        genPrac.setCity(rs.getString("city"));
+        genPrac.setStreet1(rs.getString("street1"));
+        genPrac.setStreet2(rs.getString("street2"));
+        genPrac.setStreet3(rs.getString("street3"));
+        genPrac.setSuite(rs.getString("suite"));
+        genPrac.setHouse(rs.getString("house"));
+        genPrac.setPostcode(rs.getString("postcode"));
+        genPrac.setPhnHome(rs.getString("phnHome"));
+        genPrac.setPhnWork(rs.getString("phnWork"));
+        genPrac.setCountryCode(rs.getString("countryCode"));
+        genPrac.setPhnMobile(rs.getString("phnMobile"));
+        genPrac.setPhnTwilio(rs.getString("phnTwilio"));
+        genPrac.setFaxTwilio(rs.getString("faxTwilio"));
+        genPrac.setProfile_image(rs.getString("profile_image"));
+        genPrac.setSocial_id(rs.getString("social_id"));
+        genPrac.setWebsite(rs.getString("website"));
+        genPrac.setAccreditation(rs.getString("accreditation"));
+        genPrac.setFbLink(rs.getString("fbLink"));
+        genPrac.setTwitterLink(rs.getString("twitterLink"));
+        genPrac.setInstagramLink(rs.getString("instagramLink"));
+        genPrac.setWheelChairAccess(rs.getBoolean("wheelChairAccess"));
+        genPrac.setTeleHealthOnly(rs.getString("teleHealthOnly"));
+        genPrac.setFacilities(rs.getString("facilities"));
+        genPrac.setPaymentMethods(rs.getString("paymentMethods"));
+        genPrac.setBillingType(rs.getString("billingType"));
+        genPrac.setBillingPolicy(rs.getString("billingPolicy"));
+        genPrac.setBulkBilling(rs.getString("bulkBilling"));
+        genPrac.setDirectionsParking(rs.getString("directionsParking"));
+        genPrac.setAlertMessage(rs.getString("alertMessage"));
+        genPrac.setLogin_type(rs.getInt("login_type"));
+        genPrac.setAbout(rs.getString("about"));
+        genPrac.setPassword(rs.getString("password"));
+        genPrac.setProfession(rs.getString("profession"));
+        genPrac.setProfessionid(rs.getInt("professionid"));
+        genPrac.setQualifications(rs.getString("qualifications"));
+        genPrac.setEducation(rs.getString("education"));
+        genPrac.setAreas_of_Interest(rs.getString("areas_of_Interest"));
+        genPrac.setProfessional_statement(rs.getString("professional_statement"));
+        genPrac.setAllowPatienttoBookStatus(rs.getBoolean("allowPatienttoBookStatus"));
+        genPrac.setPatientApointmentFutureDays(rs.getInt("patientApointmentFutureDays"));
+        genPrac.setOnlineBookingVisibleStatus(rs.getBoolean("onlineBookingVisibleStatus"));
+        genPrac.setTellNewPatientStatus(rs.getBoolean("tellNewPatientStatus"));
+        genPrac.setApp_practitioner(rs.getInt("app_practitioner"));
+        genPrac.setBg_color(rs.getString("bg_color"));
+        genPrac.setFg_color(rs.getString("fg_color"));
+        genPrac.setAvailableForVideo(rs.getInt("availableForVideo"));
+        genPrac.setAvailableForAudio(rs.getInt("availableForAudio"));
+        genPrac.setLocation(rs.getString("location"));
+        genPrac.setLongitude(rs.getString("longitude"));
+        genPrac.setStripeAccountId(rs.getString("stripeAccountId"));
+        genPrac.setStripeVerified(rs.getBoolean("stripeVerified"));
+        genPrac.setAvailable_status(rs.getInt("available_status"));
+        genPrac.setReference(rs.getString("reference"));
+        genPrac.setMedicareNumber(rs.getString("medicareNumber"));
+        genPrac.setExpiryDate(rs.getString("expiryDate"));
+        genPrac.setStatus(rs.getInt("status"));
+        genPrac.setRegistrationStatus(rs.getString("registrationStatus"));
+        genPrac.setUser_type(rs.getInt("user_type"));
+        genPrac.setRegPageIndex(rs.getString("regPageIndex"));
+        genPrac.setCountry(rs.getString("countryShort"));
+        genPrac.setLanguage(rs.getString("language"));
+        return genPrac;
+    }
+}
