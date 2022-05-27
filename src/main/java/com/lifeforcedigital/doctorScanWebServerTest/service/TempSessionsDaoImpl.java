@@ -63,6 +63,11 @@ public class TempSessionsDaoImpl implements TempSessionsDao {
     }
 
     @Override
+    public List<TempSessions> updateTempSessions(List<TempSessions> tempSessionsList) {
+        return null;
+    }
+
+    @Override
     public List<TempSessions> fetchTempSessions() {
         List<TempSessions> genTempSessions =
                 jdbcTemplate.query(

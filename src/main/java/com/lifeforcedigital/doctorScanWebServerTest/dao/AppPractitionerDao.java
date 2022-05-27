@@ -9,4 +9,6 @@ public interface AppPractitionerDao {
 
     List<AppPractitioner> fetchPrac();
 
+    List<AppPractitioner> updatePrac(List<AppPractitioner> appPractitionerList);
+
 }

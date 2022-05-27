@@ -94,4 +94,9 @@ public class AppPractitionerDaoImpl implements AppPractitionerDao {
                         FETCH_PRAC, new AppPractitionerRowMapper());
         return genPrac;
     }
+
+    @Override
+    public List<AppPractitioner> updatePrac(List<AppPractitioner> appPractitionerList) {
+        return null;
+    }
 }

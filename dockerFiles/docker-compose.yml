@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  dbweb:
+#    restart: always
+
+    image: postgis/postgis:14-master
+#    command:
+#      - sh -c ./init.sh
+    container_name: dbweb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DATABASE: test
+      POSTGRES_ROOT_PASSWORD: root
+      PATH: /usr/local/bin/docker-entrypoint.sh
+#      MYSQL_URL: jdbc:mysql://stands:3306/dockerapp
+      #        MYSQL_USER: root
+#      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - ./:/usr/local/bin
+    command:
+      - /usr/local/bin/docker/init.sh
+#    networks:
+#      - spring-db
+    ports:
+      - "6705:5432"
+    expose:
+      - 5432
+
+#version: "3"
+#services:
+#  postgres:
+#    container_name: postgis
+#    image: postgis/postgis:14-master
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - db_data:/var/lib/postgresql
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_DB=test
+#
+#volumes:
+#  db_data: ~

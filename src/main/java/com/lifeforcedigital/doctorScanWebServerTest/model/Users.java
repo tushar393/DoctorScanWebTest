@@ -63,7 +63,7 @@ public class Users {
     int patientApointmentFutureDays;
     Boolean onlineBookingVisibleStatus;
     Boolean tellNewPatientStatus;
-    int app_practitioner;
+    String latitude;
     String bg_color;
     String fg_color;
     int availableForVideo;
@@ -72,6 +72,7 @@ public class Users {
     String longitude;
     String stripeAccountId;
     Boolean stripeVerified;
+
     int available_status;
     String reference;
     String medicareNumber;

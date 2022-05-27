@@ -69,7 +69,7 @@ public class UsersRowMapper implements RowMapper<Users> {
         genPrac.setPatientApointmentFutureDays(rs.getInt("patientApointmentFutureDays"));
         genPrac.setOnlineBookingVisibleStatus(rs.getBoolean("onlineBookingVisibleStatus"));
         genPrac.setTellNewPatientStatus(rs.getBoolean("tellNewPatientStatus"));
-        genPrac.setApp_practitioner(rs.getInt("app_practitioner"));
+        genPrac.setLatitude(rs.getString("latitude"));
         genPrac.setBg_color(rs.getString("bg_color"));
         genPrac.setFg_color(rs.getString("fg_color"));
         genPrac.setAvailableForVideo(rs.getInt("availableForVideo"));

@@ -66,6 +66,11 @@ public class SessionsDaoImpl implements SessionsDao {
     }
 
     @Override
+    public List<Sessions> updateSessions(List<Sessions> sessionsList) {
+        return null;
+    }
+
+    @Override
     public List<Sessions> fetchSessions() {
         List<Sessions> genSessions =
                 jdbcTemplate.query(

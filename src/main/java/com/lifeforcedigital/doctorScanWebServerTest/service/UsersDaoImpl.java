@@ -89,7 +89,7 @@ public class UsersDaoImpl implements UsersDao {
                         users.getPatientApointmentFutureDays(),
                         users.getOnlineBookingVisibleStatus(),
                         users.getTellNewPatientStatus(),
-                        users.getApp_practitioner(),
+                        users.getLatitude(),
                         users.getBg_color(),
                         users.getFg_color(),
                         users.getAvailableForVideo(),

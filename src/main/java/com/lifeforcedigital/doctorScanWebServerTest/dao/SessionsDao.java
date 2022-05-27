@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface SessionsDao {
     List<Sessions> insertSessions(List<Sessions> sessionsList);
+    List<Sessions> updateSessions(List<Sessions> sessionsList);
     List<Sessions> fetchSessions();
 }

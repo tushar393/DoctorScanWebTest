@@ -1,11 +1,13 @@
 package com.lifeforcedigital.doctorScanWebServerTest.repository;
 
 import com.lifeforcedigital.doctorScanWebServerTest.dao.PatientDetailsDao;
-import com.lifeforcedigital.doctorScanWebServerTest.model.PatientDetails;
+import com.lifeforcedigital.doctorScanWebServerTest.model.Patient;
+import com.lifeforcedigital.doctorScanWebServerTest.model.Users;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.sql.SQLException;
 import java.util.List;
 
 @Component
@@ -25,10 +27,10 @@ public class PatientDetailsRepository {
                 (PatientDetailsDao) beanFactory.getBean("App" + DAO_BEAN_SUFFIX);
     }
 
-    public List<PatientDetails> insertPatientDetails(List<PatientDetails> patientDetailsList) {
-        return patientDetailsDao.insertPatientDetails(patientDetailsList);
+    public List<Patient> insertPatientDetails(List<Patient> patientList) throws SQLException {
+        return patientDetailsDao.insertPatientDetails(patientList);
     }
-    public List<PatientDetails> getPatientDetails() {
+    public List<Users> getPatientDetails() {
         return patientDetailsDao.fetchPatientDetails();
     }
 }

@@ -48,6 +48,11 @@ public class BookingSlotsDaoImpl implements BookingSlotsDao {
     }
 
     @Override
+    public List<BookingSlots> updateBookingSlots(List<BookingSlots> bookingSlotsList) {
+        return null;
+    }
+
+    @Override
     public List<BookingSlots> fetchBookingSlots() {
         List<BookingSlots> genBookingSlots =
                 jdbcTemplate.query(
