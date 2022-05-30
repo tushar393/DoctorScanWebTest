@@ -41,4 +41,4 @@ jobs:
            
       - name: Run docker 3rd line
         run: |
-           docker exec -it postgresql1 pg_restore -v -U postgres -c -C -d postgres ./rds-test.dump
+           winpty docker exec -it postgresql1 pg_restore -v -U postgres -c -C -d postgres ./rds-test.dump
