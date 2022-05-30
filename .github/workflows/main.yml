@@ -33,5 +33,12 @@ jobs:
       - name: Run a multi-line script
         run: |
            docker run --name postgresql1 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -p 6706:5432 -v /data/postgres:/var/lib/postgresql/data -d postgis/postgis:14-master
+     
+      - name: Run docker 2nd line
+        run: |
            docker cp ./dockerFiles/rds-test.dump postgresql1:/rds-test.dump
+           
+           
+      - name: Run docker 3rd line
+        run: |
            docker exec -ti postgresql1 pg_restore -v -U postgres -c -C -d postgres ./rds-test.dump
