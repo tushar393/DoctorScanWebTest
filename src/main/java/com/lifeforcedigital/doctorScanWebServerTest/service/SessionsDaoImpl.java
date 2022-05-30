@@ -1,7 +1,6 @@
 package com.lifeforcedigital.doctorScanWebServerTest.service;
 
 import com.lifeforcedigital.doctorScanWebServerTest.dao.SessionsDao;
-import com.lifeforcedigital.doctorScanWebServerTest.model.BookingSlots;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Sessions;
 import com.lifeforcedigital.doctorScanWebServerTest.rowMapper.SessionsRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

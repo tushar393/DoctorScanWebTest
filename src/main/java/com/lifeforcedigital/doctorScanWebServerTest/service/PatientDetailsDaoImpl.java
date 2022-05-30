@@ -138,6 +138,7 @@ public class PatientDetailsDaoImpl implements PatientDetailsDao {
                 int id = keyHolder.getKey().intValue();
 
                 System.out.println(id);
+                patientDetails.setId(id);
                 jdbcTemplate.update(INSERT_patient_details, new Object[]{
                         id,
                         patientDetails.getMedicareNumber(),

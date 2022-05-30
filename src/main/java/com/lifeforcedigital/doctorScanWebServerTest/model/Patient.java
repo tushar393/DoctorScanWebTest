@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Patient {
-//    int id;
+    int id;
 //    int patientId;
 //    String medicareNumber;
 //    String medicareIndex;
