@@ -1,16 +1,19 @@
 version: "3"
+
 services:
+
   postgres:
     container_name: clinicalsync-test-web-db
-    image: lfd1/clinicalsync-test-web-db:latest
+    image: postgis/postgis:14-master
     ports:
       - "5433:5432"
     volumes:
       - db_data:/var/lib/postgresql
+      - ./pgbackup/initdb/clinicalsync-test-web-db/test-db.sql:/docker-entrypoint-initdb.d/test-db.sql:ro
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=test
+      - POSTGRES_DB=test # must match the name of the db being restored
 
 volumes:
-  db_data: ~
+  db_data:

@@ -24,12 +24,13 @@ public class AppointmentDaoImpl implements AppointmentDao {
             "INSERT INTO public.appointments (\"apptID\",\"apptTypeId\",\"practitionerID\",\"practiceId\",\"patientID\",\"practitioner_id\",\"patient_id\",\"urNo\",\"type\",\"description\",\"when\",\"flag\",\"user\",\"dts\",\"lockID\",\"apptBookID\",\"timeInWaitRoom\",\"timeInConsult\",\"timeGone\",\"almsExportDate\",\"arrived\",\"smsFlag\",\"bookingFor\",\"bookFrom\",\"callUrl\",\"audioCallUrl\",\"status\",\"deviceType\",\"isSync\",\"createdAt\",\"updatedAt\") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     private final JdbcTemplate jdbcTemplate;
+    @Autowired
+    PatientDetailsDao patientDetailsDao;
 
     public AppointmentDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-@Autowired
-    PatientDetailsDao patientDetailsDao;
+
     @Override
     public List<Appointment> insertAppointment(List<Appointment> appointmentList) throws SQLException {
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -52,7 +53,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
                     appointment.getPractitionerID(),//practitioner_id
                     appointment.getPatientID(), //patient_id
                     appointment.getUrNo(),
-null,//type
+                    null,//type
                     appointment.getDescription(),
                     appointment.getWhen(),
                     appointment.getFlag(),
