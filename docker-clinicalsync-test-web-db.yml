@@ -3,10 +3,13 @@ version: "3"
 services:
 
   postgres:
+    restart: always
     container_name: clinicalsync-test-web-db
     image: postgis/postgis:14-master
     ports:
       - "5433:5432"
+    expose:
+      - 5433
     volumes:
       - db_data:/var/lib/postgresql
       - ./pgbackup/initdb/clinicalsync-test-web-db/test-db.sql:/docker-entrypoint-initdb.d/test-db.sql:ro
@@ -14,6 +17,27 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=test # must match the name of the db being restored
+      - POSTGRES_URL=jdbc:postgresql://clinicalsync-test-web-db:5432/test
+    networks:
+      - spring-db
 
+
+  docker-app:
+    build: ./
+    restart: always
+    container_name: webTestApp
+    expose:
+      - 9090
+    ports:
+      #        - "10222:10222"
+      - "9090:9090"   ## <-- Add this
+    environment:
+      WAIT_HOSTS: clinicalsync-test-web-db:5432   ## <-- change this
+#    depends_on:
+#      - postgres
+    networks:
+      - spring-db
 volumes:
   db_data:
+networks:
+  spring-db:
