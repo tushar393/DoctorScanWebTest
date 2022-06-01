@@ -29,7 +29,8 @@ public class CancelAppointmentDaoImpl implements CancelAppointmentDao {
     @Override
     public List<CancelAppointment> insertCancelAppointment(List<CancelAppointment> cancelAppointmentList) throws SQLException {
         for (CancelAppointment cancelAppointment : cancelAppointmentList){
-            jdbcTemplate.query(UPDATE_Cancel_Appointment,new CancelAppointmentRowMapper(),new Date(),cancelAppointment.getApptID());
+            int id = cancelAppointment.getApptID();
+            jdbcTemplate.update(UPDATE_Cancel_Appointment,new Date(),id);
         }
         return cancelAppointmentList;
     }
