@@ -71,7 +71,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
                     null,//booking from
                     null,//call url
                     null,//audio call
-                    4,//status
+                    2,//status
                     null,//null
                     false,//is sync
 //                    appointment.getRowVersion(),
@@ -113,8 +113,9 @@ public class AppointmentDaoImpl implements AppointmentDao {
             genAppointment.setAlmsExportDate((String) row.get("almsExportDate"));
 //genAppointment.setRowVersion(rs.getString(""));
 //genAppointment.setApptGuuId(rs.);
-            genAppointment.setArrived(row.get("arrived") == null ? 0 : (Integer) row.get("arrived"));
-            genAppointment.setSmsFlag(row.get("smsFlag") == null ? 0 : (Integer) row.get("smsFlag"));
+            genAppointment.setArrived(row.get("arrived") == null ? 0 : Integer.parseInt((String)row.get("arrived")));
+//            genAppointment.setArrived((String) row.get("arrived"));
+            genAppointment.setSmsFlag(row.get("smsFlag") == null ? 0 : Integer.parseInt((String)row.get("smsFlag")));
 
             genPatient.setPatientID((Integer) row.get("patientID"));
             genPatient.setTitle((String) row.get("title"));
@@ -139,7 +140,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
             genPatient.setInsuranceNumber((String) row.get("insuranceNumber"));
             genPatient.setInsuranceCompanyId((String) row.get("insuranceCompanyId"));
             genPatient.setInsuranceType((String) row.get("insuranceType"));
-            genPatient.setStampUserId((Integer) row.get("stampUserId"));
+//            genPatient.setStampUserId((Integer) row.get("stampUserId"));
             genAppointment.setPatient(genPatient);
 
             appointments.add(genAppointment);
