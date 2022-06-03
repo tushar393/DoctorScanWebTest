@@ -1,5 +1,6 @@
 package com.lifeforcedigital.doctorScanWebServerTest.controller;
 
+import com.lifeforcedigital.doctorScanWebServerTest.dto.PatientDto;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Patient;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Users;
 import com.lifeforcedigital.doctorScanWebServerTest.repository.PatientDetailsRepository;
@@ -17,7 +18,8 @@ public class PatientDetailsController {
     PatientDetailsRepository patientDetailsRepository;
 
     @PostMapping
-    public List<Patient> addingPatientDetails(@RequestBody List<Patient> patientList) throws SQLException {
+    public List<Patient> addingPatientDetails(@RequestBody PatientDto patientDto) throws SQLException {
+        List<Patient> patientList = patientDto.getData();
         List<Patient> patientDetails = patientDetailsRepository.insertPatientDetails(patientList);
         return patientDetails;
     }

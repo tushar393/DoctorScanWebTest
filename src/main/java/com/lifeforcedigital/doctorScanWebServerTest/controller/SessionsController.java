@@ -1,5 +1,6 @@
 package com.lifeforcedigital.doctorScanWebServerTest.controller;
 
+import com.lifeforcedigital.doctorScanWebServerTest.dto.SessionDto;
 import com.lifeforcedigital.doctorScanWebServerTest.model.GenericResponse;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Sessions;
 import com.lifeforcedigital.doctorScanWebServerTest.repository.SessionsRepository;
@@ -16,7 +17,8 @@ public class SessionsController {
     SessionsRepository sessionsRepository;
 
     @PostMapping
-    public List<Sessions> addingSessions(@RequestBody List<Sessions> sessionsList){
+    public List<Sessions> addingSessions(@RequestBody SessionDto sessionDto){
+        List<Sessions> sessionsList = sessionDto.getData();
         List<Sessions> insertSessions = sessionsRepository.insertSessions(sessionsList);
         return insertSessions;
     }
@@ -28,8 +30,9 @@ public class SessionsController {
     }
 
     @PutMapping
-    public GenericResponse updateSession(@RequestBody List<Sessions> sessionsList) {
+    public GenericResponse updateSession(@RequestBody SessionDto sessionDto) {
         GenericResponse genericResponse = new GenericResponse();
+        List<Sessions> sessionsList = sessionDto.getData();
         if (sessionsList.isEmpty()) {
             genericResponse.setStatus(500);
             genericResponse.setMsg("Sessions List is empty");

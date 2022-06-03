@@ -1,5 +1,6 @@
 package com.lifeforcedigital.doctorScanWebServerTest.controller;
 
+import com.lifeforcedigital.doctorScanWebServerTest.dto.TempSessionDto;
 import com.lifeforcedigital.doctorScanWebServerTest.model.GenericResponse;
 import com.lifeforcedigital.doctorScanWebServerTest.model.TempSessions;
 import com.lifeforcedigital.doctorScanWebServerTest.repository.TempSessionsRepository;
@@ -15,7 +16,8 @@ public class TempSessionsController {
     TempSessionsRepository tempSessionsRepository;
 
     @PostMapping
-    public List<TempSessions> addingTempSessions(@RequestBody List<TempSessions> tempSessionsList){
+    public List<TempSessions> addingTempSessions(@RequestBody TempSessionDto tempSessionDto){
+        List<TempSessions> tempSessionsList = tempSessionDto.getData();
         List<TempSessions> insertTempsessions = tempSessionsRepository.insertTempSessions(tempSessionsList);
         return insertTempsessions;
     }
@@ -27,8 +29,9 @@ public class TempSessionsController {
     }
 
     @PutMapping
-    public GenericResponse updateTempSession(@RequestBody List<TempSessions> tempSessionsList) {
+    public GenericResponse updateTempSession(@RequestBody TempSessionDto tempSessionDto) {
         GenericResponse genericResponse = new GenericResponse();
+        List<TempSessions> tempSessionsList = tempSessionDto.getData();
         if (tempSessionsList.isEmpty()) {
             genericResponse.setStatus(500);
             genericResponse.setMsg("TempSessions List is empty");

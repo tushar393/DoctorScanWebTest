@@ -1,5 +1,6 @@
 package com.lifeforcedigital.doctorScanWebServerTest.controller;
 
+import com.lifeforcedigital.doctorScanWebServerTest.dto.AppPractitionerDto;
 import com.lifeforcedigital.doctorScanWebServerTest.model.AppPractitioner;
 import com.lifeforcedigital.doctorScanWebServerTest.model.GenericResponse;
 import com.lifeforcedigital.doctorScanWebServerTest.repository.AppPractitionerRepository;
@@ -15,7 +16,8 @@ public class AppPractitionerController {
     AppPractitionerRepository appPractitionerRepository;
 
     @PostMapping
-    public List<AppPractitioner> addingPrac(@RequestBody List<AppPractitioner> appPractitionerList){
+    public List<AppPractitioner> addingPrac(@RequestBody AppPractitionerDto appPractitionerDto){
+        List<AppPractitioner> appPractitionerList = appPractitionerDto.getData();
         List<AppPractitioner> practitionerList = appPractitionerRepository.insertPrac(appPractitionerList);
         return practitionerList;
     }
@@ -27,8 +29,9 @@ public class AppPractitionerController {
     }
 
     @PutMapping
-    public GenericResponse updateAppPractitioner(@RequestBody List<AppPractitioner> appPractitionerList) {
+    public GenericResponse updateAppPractitioner(@RequestBody AppPractitionerDto appPractitionerDto) {
         GenericResponse genericResponse = new GenericResponse();
+        List<AppPractitioner> appPractitionerList = appPractitionerDto.getData();
         if (appPractitionerList.isEmpty()) {
             genericResponse.setStatus(500);
             genericResponse.setMsg("Doctor List is empty");

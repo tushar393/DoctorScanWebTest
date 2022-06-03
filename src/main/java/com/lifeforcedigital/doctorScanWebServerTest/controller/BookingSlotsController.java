@@ -1,5 +1,6 @@
 package com.lifeforcedigital.doctorScanWebServerTest.controller;
 
+import com.lifeforcedigital.doctorScanWebServerTest.dto.BookingSlotsDto;
 import com.lifeforcedigital.doctorScanWebServerTest.model.BookingSlots;
 import com.lifeforcedigital.doctorScanWebServerTest.model.GenericResponse;
 import com.lifeforcedigital.doctorScanWebServerTest.repository.BookingSlotsRepository;
@@ -16,7 +17,8 @@ public class BookingSlotsController {
     BookingSlotsRepository bookingSlotsRepository;
 
     @PostMapping
-    public List<BookingSlots> addingBookingSlots(@RequestBody List<BookingSlots> bookingSlotsList){
+    public List<BookingSlots> addingBookingSlots(@RequestBody BookingSlotsDto bookingSlotsDto){
+        List<BookingSlots> bookingSlotsList = bookingSlotsDto.getData();
         List<BookingSlots> bookingSlots = bookingSlotsRepository.insertBookingSlots(bookingSlotsList);
         return bookingSlots;
     }
@@ -28,8 +30,9 @@ public class BookingSlotsController {
     }
 
     @PutMapping
-    public GenericResponse updateBookingSlots(@RequestBody List<BookingSlots> bookingSlotsList) {
+    public GenericResponse updateBookingSlots(@RequestBody BookingSlotsDto bookingSlotsDto) {
         GenericResponse genericResponse = new GenericResponse();
+        List<BookingSlots> bookingSlotsList = bookingSlotsDto.getData();
         if (bookingSlotsList.isEmpty()) {
             genericResponse.setStatus(500);
             genericResponse.setMsg("APPT BOOKSET List is empty");

@@ -1,5 +1,6 @@
 package com.lifeforcedigital.doctorScanWebServerTest.controller;
 
+import com.lifeforcedigital.doctorScanWebServerTest.dto.CancelAppointmentDto;
 import com.lifeforcedigital.doctorScanWebServerTest.model.CancelAppointment;
 import com.lifeforcedigital.doctorScanWebServerTest.repository.CancelAppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,15 @@ public class CancelAppointmentController {
     @Autowired
     CancelAppointmentRepository cancelAppointmentRepository;
 
-    @PutMapping
-    public List<CancelAppointment> updateCancelAppointment(@RequestBody List<CancelAppointment> cancelAppointmentList) throws SQLException {
+//    @PutMapping
+//    public List<CancelAppointment> updateCancelAppointment(@RequestBody CancelAppointmentDto cancelAppointmentDto) throws SQLException {
+//        List<CancelAppointment> cancelAppointmentList = cancelAppointmentDto.getData();
+//        List<CancelAppointment> cancelAppointments = cancelAppointmentRepository.insertCancelAppointment(cancelAppointmentList);
+//        return cancelAppointments;
+//    }
+    @PostMapping
+    public List<CancelAppointment> updateCancelAppointment(@RequestBody CancelAppointmentDto cancelAppointmentDto) throws SQLException {
+        List<CancelAppointment> cancelAppointmentList = cancelAppointmentDto.getData();
         List<CancelAppointment> cancelAppointments = cancelAppointmentRepository.insertCancelAppointment(cancelAppointmentList);
         return cancelAppointments;
     }
