@@ -6,4 +6,5 @@ import lombok.Data;
 public class GenericResponse {
     public int status;
     public String msg;
+    public Object data;
 }

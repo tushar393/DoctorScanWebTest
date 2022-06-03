@@ -37,50 +37,53 @@ public class AppointmentDaoImpl implements AppointmentDao {
 
         List<Users> patientListDb = patientDetailsDao.fetchPatientDetails();
         for (Appointment appointment : appointmentList) {
-            if (patientListDb.stream().filter(
-                    patient ->
-                            patient.getEmail().equals(appointment.getPatient().getEmail()) || patient.getPhnMobile().equals(appointment.getPatient().getPhnMobile()) || patient.getPhnHome().equals(appointment.getPatient().getPhnHome())
-            ).findAny().orElse(null) == null) {
-                Patient patient = patientDetailsDao.insertPatientDetails(List.of(appointment.getPatient())).get(0);
-            }
+            if (appointment.getPatient() != null) {
+                if (patientListDb.stream().filter(
+                        patient ->
+                                patient.getEmail().equals(appointment.getPatient().getEmail()) || patient.getPhnMobile().equals(appointment.getPatient().getPhnMobile()) || patient.getPhnHome().equals(appointment.getPatient().getPhnHome())
+                ).findAny().orElse(null) == null) {
+                    Patient patient = patientDetailsDao.insertPatientDetails(List.of(appointment.getPatient())).get(0);
+                    appointment.setPatient(patient);
+                }
 
-            jdbcTemplate.update(INSERT_Appointment, new Object[]{
-                    appointment.getApptID(),
-                    appointment.getApptTypeId(),
-                    appointment.getPractitionerID(),
-                    1,
-                    appointment.getPatientID(),
-                    appointment.getPractitionerID(),//practitioner_id
-                    appointment.getPatientID(), //patient_id
-                    appointment.getUrNo(),
-                    null,//type
-                    appointment.getDescription(),
-                    appointment.getWhen(),
-                    appointment.getFlag(),
-                    appointment.getUser(),
-                    appointment.getDts(),
-                    appointment.getLockId(),
-                    appointment.getApptBookID(),
-                    appointment.getTimeInWaitRoom(),
-                    appointment.getTimeInConsult(),
-                    appointment.getTimeGone(),
-                    appointment.getAlmsExportDate(),
-                    appointment.getArrived(),
-                    appointment.getSmsFlag(),
-                    null,//booking for
-                    null,//booking from
-                    null,//call url
-                    null,//audio call
-                    2,//status
-                    null,//null
-                    false,//is sync
+                jdbcTemplate.update(INSERT_Appointment, new Object[]{
+                        appointment.getApptID(),
+                        appointment.getApptTypeId(),
+                        appointment.getPractitionerID(),
+                        1,
+                        appointment.getPatientID(),
+                        appointment.getPractitionerID(),//practitioner_id
+                        appointment.getPatientID(), //patient_id
+                        appointment.getUrNo(),
+                        null,//type
+                        appointment.getDescription(),
+                        appointment.getWhen(),
+                        appointment.getFlag(),
+                        appointment.getUser(),
+                        appointment.getDts(),
+                        appointment.getLockId(),
+                        appointment.getApptBookID(),
+                        appointment.getTimeInWaitRoom(),
+                        appointment.getTimeInConsult(),
+                        appointment.getTimeGone(),
+                        appointment.getAlmsExportDate(),
+                        appointment.getArrived(),
+                        appointment.getSmsFlag(),
+                        null,//booking for
+                        null,//booking from
+                        null,//call url
+                        null,//audio call
+                        2,//status
+                        null,//null
+                        false,//is sync
 //                    appointment.getRowVersion(),
 //                    appointment.getApptGuuId(),
 
 
-                    new Date(),
-                    new Date()
-            });
+                        new Date(),
+                        new Date()
+                });
+            }
         }
         return appointmentList;
     }
