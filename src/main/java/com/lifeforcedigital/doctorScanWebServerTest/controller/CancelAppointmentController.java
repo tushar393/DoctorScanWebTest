@@ -15,14 +15,14 @@ public class CancelAppointmentController {
     @Autowired
     CancelAppointmentRepository cancelAppointmentRepository;
 
-//    @PutMapping
-//    public List<CancelAppointment> updateCancelAppointment(@RequestBody CancelAppointmentDto cancelAppointmentDto) throws SQLException {
-//        List<CancelAppointment> cancelAppointmentList = cancelAppointmentDto.getData();
-//        List<CancelAppointment> cancelAppointments = cancelAppointmentRepository.insertCancelAppointment(cancelAppointmentList);
-//        return cancelAppointments;
-//    }
-    @PostMapping
+    @PutMapping
     public List<CancelAppointment> updateCancelAppointment(@RequestBody CancelAppointmentDto cancelAppointmentDto) throws SQLException {
+        List<CancelAppointment> cancelAppointmentList = cancelAppointmentDto.getData();
+        List<CancelAppointment> cancelAppointments = cancelAppointmentRepository.insertCancelAppointment(cancelAppointmentList);
+        return cancelAppointments;
+    }
+    @PostMapping
+    public List<CancelAppointment> addCancelAppointment(@RequestBody CancelAppointmentDto cancelAppointmentDto) throws SQLException {
         List<CancelAppointment> cancelAppointmentList = cancelAppointmentDto.getData();
         List<CancelAppointment> cancelAppointments = cancelAppointmentRepository.insertCancelAppointment(cancelAppointmentList);
         return cancelAppointments;

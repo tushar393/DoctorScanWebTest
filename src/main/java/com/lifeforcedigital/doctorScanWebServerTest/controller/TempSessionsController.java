@@ -34,10 +34,10 @@ public class TempSessionsController {
         List<TempSessions> tempSessionsList = tempSessionDto.getData();
         if (tempSessionsList.isEmpty()) {
             genericResponse.setStatus(500);
-            genericResponse.setMsg("TempSessions List is empty");
+            genericResponse.setMessage("TempSessions List is empty");
         }
         genericResponse.setStatus(200);
-        genericResponse.setMsg("TempSessions List updated");
+        genericResponse.setMessage("TempSessions List updated");
         return genericResponse;
     }
 }

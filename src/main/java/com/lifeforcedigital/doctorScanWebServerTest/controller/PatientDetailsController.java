@@ -1,6 +1,7 @@
 package com.lifeforcedigital.doctorScanWebServerTest.controller;
 
 import com.lifeforcedigital.doctorScanWebServerTest.dto.PatientDto;
+import com.lifeforcedigital.doctorScanWebServerTest.model.GenericResponse;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Patient;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Users;
 import com.lifeforcedigital.doctorScanWebServerTest.repository.PatientDetailsRepository;
@@ -25,8 +26,12 @@ public class PatientDetailsController {
     }
 
     @GetMapping
-    public List<Users> getPatientDetails(){
+    public GenericResponse getPatientDetails() {
         List<Users> patientList = patientDetailsRepository.getPatientDetails();
-        return patientList;
+        GenericResponse genericResponse = new GenericResponse();
+        genericResponse.setSuccess("Success");
+        genericResponse.setMessage("Ok");
+        genericResponse.setData(patientList);
+        return genericResponse;
     }
 }

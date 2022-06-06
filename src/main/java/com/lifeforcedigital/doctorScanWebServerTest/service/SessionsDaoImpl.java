@@ -54,7 +54,7 @@ public class SessionsDaoImpl implements SessionsDao {
                         sessions.getFiveEnd(),
                         sessions.getFiveType(),
                         sessions.getSixStart(),
-                        sessions.getSixEnd(),
+                        null,
                         sessions.getSixType(),
                         new Date(),
                         new Date()

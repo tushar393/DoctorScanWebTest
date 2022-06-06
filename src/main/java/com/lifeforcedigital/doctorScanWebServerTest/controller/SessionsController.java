@@ -35,10 +35,10 @@ public class SessionsController {
         List<Sessions> sessionsList = sessionDto.getData();
         if (sessionsList.isEmpty()) {
             genericResponse.setStatus(500);
-            genericResponse.setMsg("Sessions List is empty");
+            genericResponse.setMessage("Sessions List is empty");
         }
         genericResponse.setStatus(200);
-        genericResponse.setMsg("Sessions List updated");
+        genericResponse.setMessage("Sessions List updated");
         return genericResponse;
     }
 }

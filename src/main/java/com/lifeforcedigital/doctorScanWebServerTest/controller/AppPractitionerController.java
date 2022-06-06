@@ -34,10 +34,10 @@ public class AppPractitionerController {
         List<AppPractitioner> appPractitionerList = appPractitionerDto.getData();
         if (appPractitionerList.isEmpty()) {
             genericResponse.setStatus(500);
-            genericResponse.setMsg("Doctor List is empty");
+            genericResponse.setMessage("Doctor List is empty");
         }
         genericResponse.setStatus(201);
-        genericResponse.setMsg("Doctor List updated");
+        genericResponse.setMessage("Doctor List updated");
         return genericResponse;
     }
 }

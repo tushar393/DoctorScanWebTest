@@ -16,8 +16,8 @@ public class ClearDbController {
         clearDbDao.clearDb();
     }
 
-    @GetMapping("/api/v1/new-staging-test-data")
-    public void registerPracAndPatient(){
-    }
+//    @GetMapping("/api/v1/new-staging-test-data")
+//    public void registerPracAndPatient(){
+//    }
 
 }

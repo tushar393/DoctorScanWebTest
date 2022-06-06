@@ -35,10 +35,10 @@ public class BookingSlotsController {
         List<BookingSlots> bookingSlotsList = bookingSlotsDto.getData();
         if (bookingSlotsList.isEmpty()) {
             genericResponse.setStatus(500);
-            genericResponse.setMsg("APPT BOOKSET List is empty");
+            genericResponse.setMessage("APPT BOOKSET List is empty");
         }
         genericResponse.setStatus(201);
-        genericResponse.setMsg("APPT BOOKSET List updated");
+        genericResponse.setMessage("APPT BOOKSET List updated");
         return genericResponse;
     }
 }

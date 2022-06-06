@@ -8,6 +8,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class AppPractitionerDaoImpl implements AppPractitionerDao {
     private final KeyHolder keyHolder = new GeneratedKeyHolder();
 
     private static final String INSERT_Practitioner =
-    "INSERT INTO public.app_practitioners (\"userId\", \"apptBookID\", \"pracID\", \"practitionerID\", \"practitioner\", \"location\", \"name\", \"email\", \"phoneNo\", \"status\",\"createdAt\",\"updatedAt\") VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+    "INSERT INTO public.app_practitioners (\"userId\", \"apptBookID\", \"pracID\", \"practitionerID\", \"practitioner\", \"location\", \"name\", \"email\", \"phoneNo\", \"status\",\"createdAt\",\"updatedAt\") VALUES(?,?,?,?,?,?,?,?,?,?,?::timestamptz,?::timestamptz)";
 
     private static final String FETCH_PRAC ="select * from public.app_practitioners";
 
@@ -30,7 +31,7 @@ public class AppPractitionerDaoImpl implements AppPractitionerDao {
     public List<AppPractitioner> insertPrac(List<AppPractitioner> appPractitionerList) {
 
         List <AppPractitioner> dbAppPractitioner= this.fetchPrac();
-
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         for (AppPractitioner appPractioner : appPractitionerList) {
             if (dbAppPractitioner.stream().filter(appPractitioner1 -> appPractitioner1.getPractitionerID() == appPractioner.getPractitionerID()).findAny().orElse(null) == null) {
 
@@ -38,21 +39,41 @@ public class AppPractitionerDaoImpl implements AppPractitionerDao {
 //        }
 //        for (AppPractitioner appPractioner : appPractitionerList) {
 
-                jdbcTemplate.update(INSERT_Practitioner, new Object[]{
-                        appPractioner.getUserId(),
-                        appPractioner.getApptBookID(),
-                        appPractioner.getPracID(),
-                        appPractioner.getPractitionerID(),
-                        appPractioner.getPractitioner(),
-                        appPractioner.getLocation(),
-                        appPractioner.getName(),
-                        appPractioner.getEmail(),
-                        appPractioner.getPhoneNo(),
-                        appPractioner.getStatus(),
-                        new Date(),
-                        new Date()
+                jdbcTemplate.update(
+                        connection -> {
+                            PreparedStatement ps = connection.prepareStatement(INSERT_Practitioner,
+                                    new String[]{"id"});
+                            ps.setInt(1, appPractioner.getUserId());
+                            ps.setInt(2, appPractioner.getApptBookID());
+                            ps.setInt(3, appPractioner.getPracID());
+                            ps.setInt(4, appPractioner.getPractitionerID());
+                            ps.setString(5, appPractioner.getPractitioner());
+                            ps.setString(6, appPractioner.getLocation());
+                            ps.setString(7, appPractioner.getName());
+                            ps.setString(8, appPractioner.getEmail());
+                            ps.setString(9, appPractioner.getPhoneNo());
+                            ps.setString(10, appPractioner.getStatus());
+                            ps.setString(11, String.valueOf(new Date()));
+                            ps.setString(12, String.valueOf(new Date()));
+                            return ps;
+//                        }
+//                        INSERT_Practitioner,  new String[] {"id"} {
+//                        appPractioner.getUserId(),
+//                        appPractioner.getApptBookID(),
+//                        appPractioner.getPracID(),
+//                        appPractioner.getPractitionerID(),
+//                        appPractioner.getPractitioner(),
+//                        appPractioner.getLocation(),
+//                        appPractioner.getName(),
+//                        appPractioner.getEmail(),
+//                        appPractioner.getPhoneNo(),
+//                        appPractioner.getStatus(),
+//                        new Date(),
+//                        new Date()
 
-                });
+                },keyHolder);
+                int id = keyHolder.getKey().intValue();
+                appPractioner.setId(id);
             }
 
 
