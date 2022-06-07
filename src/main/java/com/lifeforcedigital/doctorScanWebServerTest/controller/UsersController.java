@@ -33,14 +33,18 @@ public class UsersController {
 
     @GetMapping("/new-staging-test-data")
     public GenericResponse getUsers() throws SQLException {
+        StaggingResponseIds staggingResponseIds = new StaggingResponseIds();
         AppPractitioner appPractitioner = new AppPractitioner(1, 1, 1, 1, null, null, "Dr I Feelgood", "feelgood.samples@hcn.com.au", "1300 788 802", "A");
         Patient patient = new Patient(3, null, "Heather", null, "ANDREWS", "1963-05-12 00", "F", null, null, "1300 788 802", "234 George Street", null, null, "Bundaberg", "4670", "andrews.h@hcn.sampledb.com.au", "3500265121", null, null, "F", null, null, null, 2);
         List<AppPractitioner> appPractitionerUserList = usersRepository.insertUsers(List.of(appPractitioner));
+        staggingResponseIds.setDoctorId(appPractitionerUserList.get(0).getId());
         List<AppPractitioner> appPractitionerList = appPractitionerRepository.insertPrac(appPractitionerUserList);
+       staggingResponseIds.setAppPractisonarId(appPractitionerList.get(0).getId());
         List<Patient> patientList = patientDetailsRepository.insertPatientDetails(List.of(patient));
-        StaggingResponseIds staggingResponseIds = new StaggingResponseIds(patientList.get(0).getId(), appPractitionerUserList.get(0).getId(), appPractitionerList.get(0).getId());
+        staggingResponseIds.setPatientId(patientList.get(0).getId());
         GenericResponse genericResponse = new GenericResponse();
         genericResponse.setStatus(201);
+        genericResponse.setSuccess(true);
         genericResponse.setData(staggingResponseIds);
         genericResponse.setMessage("New Data Created");
         return genericResponse;

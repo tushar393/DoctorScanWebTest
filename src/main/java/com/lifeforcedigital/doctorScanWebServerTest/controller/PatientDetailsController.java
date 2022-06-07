@@ -29,7 +29,7 @@ public class PatientDetailsController {
     public GenericResponse getPatientDetails() {
         List<Users> patientList = patientDetailsRepository.getPatientDetails();
         GenericResponse genericResponse = new GenericResponse();
-        genericResponse.setSuccess("Success");
+        genericResponse.setSuccess(true);
         genericResponse.setMessage("Ok");
         genericResponse.setData(patientList);
         return genericResponse;
