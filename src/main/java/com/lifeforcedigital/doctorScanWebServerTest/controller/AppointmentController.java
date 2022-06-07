@@ -1,7 +1,9 @@
 package com.lifeforcedigital.doctorScanWebServerTest.controller;
 
+import com.lifeforcedigital.doctorScanWebServerTest.dto.AckAppointmentRequestDto;
 import com.lifeforcedigital.doctorScanWebServerTest.dto.AppointmentDto;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Appointment;
+import com.lifeforcedigital.doctorScanWebServerTest.model.ApptWebId;
 import com.lifeforcedigital.doctorScanWebServerTest.model.GenericResponse;
 import com.lifeforcedigital.doctorScanWebServerTest.model.WebAppointment;
 import com.lifeforcedigital.doctorScanWebServerTest.repository.AppointmentRepository;
@@ -58,5 +60,16 @@ public class AppointmentController {
     public GenericResponse webCancelAppointment(@PathVariable int webid, @RequestBody GenericResponse genericResponse) {
         appointmentRepository.updateWebAppointment(webid, genericResponse.getStatus());
         return genericResponse;
+    }
+    @PutMapping("/sync-appointments")
+    public Boolean webAckAppointment(@RequestBody AckAppointmentRequestDto ackAppointmentRequestDto) {
+        List<ApptWebId> apptWebIds= ackAppointmentRequestDto.getData();
+       try {
+           appointmentRepository.updateAckWebAppointment(apptWebIds);
+           return true;
+       }
+       catch(Exception e){
+           return false;
+       }
     }
 }

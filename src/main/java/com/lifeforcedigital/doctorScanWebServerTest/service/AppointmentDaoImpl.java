@@ -22,7 +22,9 @@ public class AppointmentDaoImpl implements AppointmentDao {
     private static final String INSERT_Appointment =
             "INSERT INTO public.appointments (\"apptID\",\"apptTypeId\",\"practitionerID\",\"practiceId\",\"patientID\",\"practitioner_id\",\"patient_id\",\"urNo\",\"type\",\"description\",\"when\",\"flag\",\"user\",\"dts\",\"lockID\",\"apptBookID\",\"timeInWaitRoom\",\"timeInConsult\",\"timeGone\",\"almsExportDate\",\"arrived\",\"smsFlag\",\"bookingFor\",\"bookFrom\",\"callUrl\",\"audioCallUrl\",\"status\",\"deviceType\",\"isSync\",\"createdAt\",\"updatedAt\") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?::timestamptz,?::timestamptz)";
     private static final String UPDATE_Cancel_Appointment =
-            "UPDATE public.appointments SET \"status\"=?, \"isSync\"=true , \"updatedAt\"=? WHERE \"id\" =?";
+            "UPDATE public.appointments SET \"status\"=?, \"isSync\"=false , \"updatedAt\"=? WHERE \"id\" =?";
+    private static final String UPDATE_Appointment =
+            "UPDATE public.appointments SET \"apptID\"=?, \"updatedAt\"=? WHERE \"id\" =?";
 
     private final JdbcTemplate jdbcTemplate;
     @Autowired
@@ -161,36 +163,36 @@ public class AppointmentDaoImpl implements AppointmentDao {
         jdbcTemplate.update(
                 connection -> {
                     PreparedStatement ps = connection.prepareStatement(INSERT_Appointment,
-                            new String[] {"id"});
-                    ps.setInt(1,0);
-                    ps.setInt(2,webAppointment.getApptTypeId());
-                    ps.setInt(3,2);
-                    ps.setInt(4,webAppointment.getPracticeId());
-                    ps.setInt(5,3);
-                    ps.setInt(6,webAppointment.getPractitioner_id());
-                    ps.setInt(7,webAppointment.getPatient_id());
-                    ps.setString(8,null);
-                    ps.setInt(9,0);
-                    ps.setString(10,webAppointment.getDescription());
-                    ps.setString(11,webAppointment.getWhen());
-                    ps.setInt(12,0);
-                    ps.setString(13,null);
-                    ps.setString(14,null);
-                    ps.setInt(15,0);
-                    ps.setInt(16,1);
-                    ps.setString(17,null);
-                    ps.setString(18,null);
-                    ps.setString(19,null);
-                    ps.setString(20,null);
-                    ps.setString(21,null);
-                    ps.setInt(22,0);
-                    ps.setString(23,webAppointment.getBookingFor());
-                    ps.setInt(24,1);
-                    ps.setString(25,webAppointment.getCallUrl());
-                    ps.setString(26,webAppointment.getAudioCallUrl());
-                    ps.setInt(27,2);
-                    ps.setString(28,webAppointment.getDeviceType());
-                    ps.setBoolean(29,false);
+                            new String[]{"id"});
+                    ps.setInt(1, 0);
+                    ps.setInt(2, webAppointment.getApptTypeId());
+                    ps.setInt(3, 2);
+                    ps.setInt(4, webAppointment.getPracticeId());
+                    ps.setInt(5, 3);
+                    ps.setInt(6, webAppointment.getPractitioner_id());
+                    ps.setInt(7, webAppointment.getPatient_id());
+                    ps.setString(8, null);
+                    ps.setInt(9, 0);
+                    ps.setString(10, webAppointment.getDescription());
+                    ps.setString(11, webAppointment.getWhen());
+                    ps.setInt(12, 0);
+                    ps.setString(13, null);
+                    ps.setString(14, null);
+                    ps.setInt(15, 0);
+                    ps.setInt(16, 1);
+                    ps.setString(17, null);
+                    ps.setString(18, null);
+                    ps.setString(19, null);
+                    ps.setString(20, null);
+                    ps.setString(21, null);
+                    ps.setInt(22, 0);
+                    ps.setString(23, webAppointment.getBookingFor());
+                    ps.setInt(24, 1);
+                    ps.setString(25, webAppointment.getCallUrl());
+                    ps.setString(26, webAppointment.getAudioCallUrl());
+                    ps.setInt(27, 2);
+                    ps.setString(28, webAppointment.getDeviceType());
+                    ps.setBoolean(29, false);
                     ps.setString(30, String.valueOf(new Date()));
                     ps.setString(31, String.valueOf(new Date()));
                     return ps;
@@ -202,7 +204,14 @@ public class AppointmentDaoImpl implements AppointmentDao {
 
     @Override
     public void updateWebAppointment(int webid, int status) {
-                jdbcTemplate.update(UPDATE_Cancel_Appointment,status,new Date(),webid);
-            }
+        jdbcTemplate.update(UPDATE_Cancel_Appointment, status, new Date(), webid);
+    }
+
+    @Override
+    public void updateAckWebAppointment(List<ApptWebId> apptWebIds) {
+        for (ApptWebId apptWebId : apptWebIds) {
+            jdbcTemplate.update(UPDATE_Appointment, apptWebId.getApptID(), new Date(), apptWebId.getWebId());
+        }
+    }
 
 }

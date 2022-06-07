@@ -2,6 +2,7 @@ package com.lifeforcedigital.doctorScanWebServerTest.repository;
 
 import com.lifeforcedigital.doctorScanWebServerTest.dao.AppointmentDao;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Appointment;
+import com.lifeforcedigital.doctorScanWebServerTest.model.ApptWebId;
 import com.lifeforcedigital.doctorScanWebServerTest.model.WebAppointment;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.stereotype.Component;
@@ -41,5 +42,9 @@ public class AppointmentRepository {
 
     public void updateWebAppointment(int webid, int status) {
         appointmentDao.updateWebAppointment(webid, status);
+    }
+
+    public void updateAckWebAppointment(List<ApptWebId> apptWebIds) {
+        appointmentDao.updateAckWebAppointment(apptWebIds);
     }
 }

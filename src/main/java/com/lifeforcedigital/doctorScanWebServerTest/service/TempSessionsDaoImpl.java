@@ -52,7 +52,7 @@ public class TempSessionsDaoImpl implements TempSessionsDao {
                         tempSessions.getFiveEnd(),
                         tempSessions.getFiveType(),
                         tempSessions.getSixStart(),
-                        tempSessions.getSixEnd(),
+                        null,
                         tempSessions.getSixType(),
                         new Date(),
                         new Date()
