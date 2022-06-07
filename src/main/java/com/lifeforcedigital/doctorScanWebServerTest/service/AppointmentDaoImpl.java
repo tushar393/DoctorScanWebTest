@@ -2,10 +2,7 @@ package com.lifeforcedigital.doctorScanWebServerTest.service;
 
 import com.lifeforcedigital.doctorScanWebServerTest.dao.AppointmentDao;
 import com.lifeforcedigital.doctorScanWebServerTest.dao.PatientDetailsDao;
-import com.lifeforcedigital.doctorScanWebServerTest.model.Appointment;
-import com.lifeforcedigital.doctorScanWebServerTest.model.Patient;
-import com.lifeforcedigital.doctorScanWebServerTest.model.Users;
-import com.lifeforcedigital.doctorScanWebServerTest.model.WebAppointment;
+import com.lifeforcedigital.doctorScanWebServerTest.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -21,9 +18,11 @@ import java.util.Map;
 
 @Repository("AppAppointmentDao")
 public class AppointmentDaoImpl implements AppointmentDao {
-    private static final String FETCH_APPONTMENT = "select * from public.appointments a join users u on a.\"patientID\"=u.\"id\" join patient_details pd on a.\"patientID\"=pd.\"patientId\"";
+    private static final String FETCH_APPONTMENT = "select * from public.appointments a join users u on a.\"patient_id\"=u.\"id\" join patient_details pd on a.\"patient_id\"=pd.\"patientId\"";
     private static final String INSERT_Appointment =
             "INSERT INTO public.appointments (\"apptID\",\"apptTypeId\",\"practitionerID\",\"practiceId\",\"patientID\",\"practitioner_id\",\"patient_id\",\"urNo\",\"type\",\"description\",\"when\",\"flag\",\"user\",\"dts\",\"lockID\",\"apptBookID\",\"timeInWaitRoom\",\"timeInConsult\",\"timeGone\",\"almsExportDate\",\"arrived\",\"smsFlag\",\"bookingFor\",\"bookFrom\",\"callUrl\",\"audioCallUrl\",\"status\",\"deviceType\",\"isSync\",\"createdAt\",\"updatedAt\") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?::timestamptz,?::timestamptz)";
+    private static final String UPDATE_Cancel_Appointment =
+            "UPDATE public.appointments SET \"status\"=?, \"isSync\"=true , \"updatedAt\"=? WHERE \"id\" =?";
 
     private final JdbcTemplate jdbcTemplate;
     @Autowired
@@ -165,9 +164,9 @@ public class AppointmentDaoImpl implements AppointmentDao {
                             new String[] {"id"});
                     ps.setInt(1,0);
                     ps.setInt(2,webAppointment.getApptTypeId());
-                    ps.setInt(3,webAppointment.getPractitionerID());
+                    ps.setInt(3,2);
                     ps.setInt(4,webAppointment.getPracticeId());
-                    ps.setInt(5,webAppointment.getPatientID());
+                    ps.setInt(5,3);
                     ps.setInt(6,webAppointment.getPractitioner_id());
                     ps.setInt(7,webAppointment.getPatient_id());
                     ps.setString(8,null);
@@ -200,4 +199,10 @@ public class AppointmentDaoImpl implements AppointmentDao {
         webAppointment.setId(id);
         return webAppointment;
     }
+
+    @Override
+    public void updateWebAppointment(int webid, int status) {
+                jdbcTemplate.update(UPDATE_Cancel_Appointment,status,new Date(),webid);
+            }
+
 }

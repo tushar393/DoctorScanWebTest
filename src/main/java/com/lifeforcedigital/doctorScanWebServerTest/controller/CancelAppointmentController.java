@@ -29,8 +29,10 @@ public class CancelAppointmentController {
     }
 
     @GetMapping
-    public List<CancelAppointment> getCancelAppointment(){
+    public CancelAppointmentDto getCancelAppointment(){
+        CancelAppointmentDto cancelAppointmentDto=new CancelAppointmentDto();
         List<CancelAppointment> cancelAppointmentList = cancelAppointmentRepository.getCancelAppointment();
-        return cancelAppointmentList;
+        cancelAppointmentDto.setData(cancelAppointmentList);
+        return cancelAppointmentDto;
     }
 }

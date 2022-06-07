@@ -1,10 +1,7 @@
 package com.lifeforcedigital.doctorScanWebServerTest.repository;
 
-import com.lifeforcedigital.doctorScanWebServerTest.dao.AppPractitionerDao;
 import com.lifeforcedigital.doctorScanWebServerTest.dao.AppointmentDao;
-import com.lifeforcedigital.doctorScanWebServerTest.model.AppPractitioner;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Appointment;
-import com.lifeforcedigital.doctorScanWebServerTest.model.GenericResponse;
 import com.lifeforcedigital.doctorScanWebServerTest.model.WebAppointment;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.stereotype.Component;
@@ -33,11 +30,16 @@ public class AppointmentRepository {
     public List<Appointment> insertAppointment(List<Appointment> appointmentList) throws SQLException {
         return appointmentDao.insertAppointment(appointmentList);
     }
+
     public List<Appointment> getAppointment() {
         return appointmentDao.fetchAppointments();
     }
 
-    public WebAppointment insertWebAppointment(WebAppointment webAppointment){
+    public WebAppointment insertWebAppointment(WebAppointment webAppointment) {
         return appointmentDao.insertWebAppointment(webAppointment);
+    }
+
+    public void updateWebAppointment(int webid, int status) {
+        appointmentDao.updateWebAppointment(webid, status);
     }
 }

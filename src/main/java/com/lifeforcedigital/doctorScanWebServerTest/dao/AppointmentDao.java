@@ -1,8 +1,6 @@
 package com.lifeforcedigital.doctorScanWebServerTest.dao;
 
-import com.lifeforcedigital.doctorScanWebServerTest.model.AppPractitioner;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Appointment;
-import com.lifeforcedigital.doctorScanWebServerTest.model.GenericResponse;
 import com.lifeforcedigital.doctorScanWebServerTest.model.WebAppointment;
 
 import java.sql.SQLException;
@@ -14,4 +12,6 @@ public interface AppointmentDao {
     List<Appointment> fetchAppointments();
 
     WebAppointment insertWebAppointment(WebAppointment webAppointment);
+
+    void updateWebAppointment(int webid, int status);
 }
