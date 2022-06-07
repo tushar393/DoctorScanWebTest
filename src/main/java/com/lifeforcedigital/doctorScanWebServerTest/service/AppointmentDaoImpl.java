@@ -5,12 +5,14 @@ import com.lifeforcedigital.doctorScanWebServerTest.dao.PatientDetailsDao;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Appointment;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Patient;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Users;
+import com.lifeforcedigital.doctorScanWebServerTest.model.WebAppointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,7 +23,7 @@ import java.util.Map;
 public class AppointmentDaoImpl implements AppointmentDao {
     private static final String FETCH_APPONTMENT = "select * from public.appointments a join users u on a.\"patientID\"=u.\"id\" join patient_details pd on a.\"patientID\"=pd.\"patientId\"";
     private static final String INSERT_Appointment =
-            "INSERT INTO public.appointments (\"apptID\",\"apptTypeId\",\"practitionerID\",\"practiceId\",\"patientID\",\"practitioner_id\",\"patient_id\",\"urNo\",\"type\",\"description\",\"when\",\"flag\",\"user\",\"dts\",\"lockID\",\"apptBookID\",\"timeInWaitRoom\",\"timeInConsult\",\"timeGone\",\"almsExportDate\",\"arrived\",\"smsFlag\",\"bookingFor\",\"bookFrom\",\"callUrl\",\"audioCallUrl\",\"status\",\"deviceType\",\"isSync\",\"createdAt\",\"updatedAt\") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "INSERT INTO public.appointments (\"apptID\",\"apptTypeId\",\"practitionerID\",\"practiceId\",\"patientID\",\"practitioner_id\",\"patient_id\",\"urNo\",\"type\",\"description\",\"when\",\"flag\",\"user\",\"dts\",\"lockID\",\"apptBookID\",\"timeInWaitRoom\",\"timeInConsult\",\"timeGone\",\"almsExportDate\",\"arrived\",\"smsFlag\",\"bookingFor\",\"bookFrom\",\"callUrl\",\"audioCallUrl\",\"status\",\"deviceType\",\"isSync\",\"createdAt\",\"updatedAt\") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?::timestamptz,?::timestamptz)";
 
     private final JdbcTemplate jdbcTemplate;
     @Autowired
@@ -116,9 +118,9 @@ public class AppointmentDaoImpl implements AppointmentDao {
             genAppointment.setAlmsExportDate((String) row.get("almsExportDate"));
 //genAppointment.setRowVersion(rs.getString(""));
 //genAppointment.setApptGuuId(rs.);
-            genAppointment.setArrived(row.get("arrived") == null ? 0 : Integer.parseInt((String)row.get("arrived")));
+            genAppointment.setArrived(row.get("arrived") == null ? 0 : Integer.parseInt((String) row.get("arrived")));
 //            genAppointment.setArrived((String) row.get("arrived"));
-            genAppointment.setSmsFlag(row.get("smsFlag") == null ? 0 : Integer.parseInt((String)row.get("smsFlag")));
+            genAppointment.setSmsFlag(row.get("smsFlag") == null ? 0 : Integer.parseInt((String) row.get("smsFlag")));
 
             genPatient.setPatientID((Integer) row.get("patientID"));
             genPatient.setTitle((String) row.get("title"));
@@ -151,5 +153,51 @@ public class AppointmentDaoImpl implements AppointmentDao {
 
 
         return appointments;
+    }
+
+    @Override
+    public WebAppointment insertWebAppointment(WebAppointment webAppointment) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(
+                connection -> {
+                    PreparedStatement ps = connection.prepareStatement(INSERT_Appointment,
+                            new String[] {"id"});
+                    ps.setInt(1,0);
+                    ps.setInt(2,webAppointment.getApptTypeId());
+                    ps.setInt(3,webAppointment.getPractitionerID());
+                    ps.setInt(4,webAppointment.getPracticeId());
+                    ps.setInt(5,webAppointment.getPatientID());
+                    ps.setInt(6,webAppointment.getPractitioner_id());
+                    ps.setInt(7,webAppointment.getPatient_id());
+                    ps.setString(8,null);
+                    ps.setInt(9,0);
+                    ps.setString(10,webAppointment.getDescription());
+                    ps.setString(11,webAppointment.getWhen());
+                    ps.setInt(12,0);
+                    ps.setString(13,null);
+                    ps.setString(14,null);
+                    ps.setInt(15,0);
+                    ps.setInt(16,1);
+                    ps.setString(17,null);
+                    ps.setString(18,null);
+                    ps.setString(19,null);
+                    ps.setString(20,null);
+                    ps.setString(21,null);
+                    ps.setInt(22,0);
+                    ps.setString(23,webAppointment.getBookingFor());
+                    ps.setInt(24,1);
+                    ps.setString(25,webAppointment.getCallUrl());
+                    ps.setString(26,webAppointment.getAudioCallUrl());
+                    ps.setInt(27,2);
+                    ps.setString(28,webAppointment.getDeviceType());
+                    ps.setBoolean(29,false);
+                    ps.setString(30, String.valueOf(new Date()));
+                    ps.setString(31, String.valueOf(new Date()));
+                    return ps;
+                }, keyHolder);
+        int id = keyHolder.getKey().intValue();
+        webAppointment.setId(id);
+        return webAppointment;
     }
 }

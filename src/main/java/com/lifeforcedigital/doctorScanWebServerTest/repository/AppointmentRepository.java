@@ -5,6 +5,7 @@ import com.lifeforcedigital.doctorScanWebServerTest.dao.AppointmentDao;
 import com.lifeforcedigital.doctorScanWebServerTest.model.AppPractitioner;
 import com.lifeforcedigital.doctorScanWebServerTest.model.Appointment;
 import com.lifeforcedigital.doctorScanWebServerTest.model.GenericResponse;
+import com.lifeforcedigital.doctorScanWebServerTest.model.WebAppointment;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.stereotype.Component;
 
@@ -34,5 +35,9 @@ public class AppointmentRepository {
     }
     public List<Appointment> getAppointment() {
         return appointmentDao.fetchAppointments();
+    }
+
+    public WebAppointment insertWebAppointment(WebAppointment webAppointment){
+        return appointmentDao.insertWebAppointment(webAppointment);
     }
 }
