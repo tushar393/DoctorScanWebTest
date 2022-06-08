@@ -1,22 +1,21 @@
 package com.lifeforcedigital.doctorScanWebServerTest.controller;
 
-import com.lifeforcedigital.doctorScanWebServerTest.model.AppPractitioner;
-import com.lifeforcedigital.doctorScanWebServerTest.model.GenericResponse;
-import com.lifeforcedigital.doctorScanWebServerTest.model.Patient;
-import com.lifeforcedigital.doctorScanWebServerTest.model.StaggingResponseIds;
+import com.lifeforcedigital.doctorScanWebServerTest.dto.FetchClinicsDto;
+import com.lifeforcedigital.doctorScanWebServerTest.model.*;
 import com.lifeforcedigital.doctorScanWebServerTest.repository.AppPractitionerRepository;
 import com.lifeforcedigital.doctorScanWebServerTest.repository.PatientDetailsRepository;
 import com.lifeforcedigital.doctorScanWebServerTest.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/")
 public class UsersController {
     @Autowired
     UsersRepository usersRepository;
@@ -31,7 +30,7 @@ public class UsersController {
 //        return insertUsers;
 //    }
 
-    @GetMapping("/new-staging-test-data")
+    @GetMapping("/api/v1/new-staging-test-data")
     public GenericResponse getUsers() throws SQLException {
         StaggingResponseIds staggingResponseIds = new StaggingResponseIds();
         AppPractitioner appPractitioner = new AppPractitioner(1, 1, 1, 1, null, null, "Dr I Feelgood", "feelgood.samples@hcn.com.au", "1300 788 802", "A");
@@ -48,5 +47,33 @@ public class UsersController {
         genericResponse.setData(staggingResponseIds);
         genericResponse.setMessage("New Data Created");
         return genericResponse;
+    }
+
+    @GetMapping("/admin/user/list")
+    public HashMap<String,Object> getClinics(@RequestParam("user_type") int user_type,
+                                             @RequestParam("page") int page,
+                                             @RequestParam("perPage") int perPage){
+        HashMap<String,Object> objectMap = new HashMap<String,Object>();
+        HashMap<String,Integer> objectIntMap = new HashMap<String,Integer>();
+        //Just select those users whose user_type is 4 , i.e clicnics
+        List<Users> usersList = usersRepository.getUsers();
+        List<FetchClinics> fetchClinicsList = new ArrayList<>();
+        for (Users users : usersList){
+            FetchClinics fetchClinics = new FetchClinics();
+            fetchClinics.setId(users.getId());
+            fetchClinics.setName(users.getName());
+            fetchClinics.setEmail(users.getEmail());
+            fetchClinics.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOjQsInRva2VuVHlwZSI6ImF1dGhUb2tlbiIsImlhdCI6MTY1NDY4Mzc4MiwiZXhwIjoxNjg2MjE5NzgyfQ.J6-nnF7Mdv1J_VIkMiQlQEn-dB9fJmpPGZ6FlX46mu8");
+            fetchClinicsList.add(fetchClinics);
+        }
+        objectIntMap.put("perPage",200);
+        objectIntMap.put("page",1);
+        objectIntMap.put("totalCount",3);
+
+        objectMap.put("status","success");
+        objectMap.put("data",fetchClinicsList);
+        objectMap.put("pagination",objectIntMap);
+
+        return objectMap;
     }
 }
